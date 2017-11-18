@@ -1,0 +1,21 @@
+{
+  "name": "neopixel_control",
+  "displayName": "NeoPixel",
+  "version": "1.0.0",
+  "description": "A simple controller for NeoPixel based light shows",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-bluetooth-serial": {}
+    }
+  },
+  "dependencies": {
+    "cordova-plugin-whitelist": "1"
+  }
+}

@@ -1,0 +1,5 @@
+#!/bin/sh
+# $Id: runNodeAutoTests 1436 2017-03-29 02:17:45Z cxh $
+# Run the composite accessors in just this directory using the Node Accessor Host
+
+(cd ../..; mocha hosts/node/test/testNodeOneAuto.js --Dauto=net/test/auto --Dtimeout=5500)
