@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "IonicProject",
+  "short_name": "IonicProject",
+  "version": "com.ionicframework.ionicproject825534",
+  "description": "An Ionic Framework and Cordova project.",
+  "author": "Your Name Here",
+  "icons": [],
+  "start_url": "index.html"
+}

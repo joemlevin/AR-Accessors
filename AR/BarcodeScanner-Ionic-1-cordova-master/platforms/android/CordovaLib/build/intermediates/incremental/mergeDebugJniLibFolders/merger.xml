@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/hani_sp/Downloads/BarcodeScanner-Ionic-1-cordova-master/platforms/android/CordovaLib/src/main/jniLibs"/></dataSet><dataSet config="debug"><source path="/Users/hani_sp/Downloads/BarcodeScanner-Ionic-1-cordova-master/platforms/android/CordovaLib/src/debug/jniLibs"/></dataSet></merger>
