@@ -2,6 +2,9 @@ exports.setup = function() {
     this.input('switch', {
         'type': 'string',
     });
+    this.output('schema', {
+        'type': 'JSON',
+    });
     this.output('output', {
         'type': 'string'
     });
@@ -25,5 +28,18 @@ function handleInput() {
 
 exports.initialize = function () {
     this.addInputHandler('switch', handleInput);
-    console.log("Ready to start.")
+    this.send('schema', schema);
+    console.log("NeoPixel ready to start.")
 }
+
+var schema = {
+    "type": "object",
+    "properties": {
+        "show": {
+            "type": "string",
+            "title": "Show Select",
+            "description": "The name of the show to play",
+            "choices": ["A", "B", "C", "D", "E"]
+        }
+    }
+};

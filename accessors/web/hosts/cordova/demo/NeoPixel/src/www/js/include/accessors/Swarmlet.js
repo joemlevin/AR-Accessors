@@ -35,15 +35,20 @@
  */
 
 exports.setup = function() {
+    this.input('input');
     console.log('Swarmlet setup...');
     var led = this.instantiate("LEDControl", "LED");
-    this.input('input');
+    var schemaToHTML = this.instantiate('sth', 'SchemaToHTML');
+    var ui = this.instantiate('ui', 'UserInput');
+    this.connect(led, 'schema', schemaToHTML, 'schema');
     this.connect('input', led, 'switch');
+    this.connect(schemaToHTML, 'html', ui, 'input');
     console.log('Swarmlet setup ended.');
 };
 
 
 
 exports.initialize = function () {
+    this.react();
     console.log('Swarmlet initialized');
 };

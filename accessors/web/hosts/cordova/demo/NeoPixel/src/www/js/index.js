@@ -18,7 +18,7 @@ var app = {
     },
 
     handleUserInput: function() {
-        x = document.getElementById("command").elements["show_select"].value;
+        x = document.getElementById("form").elements["show"].value;
         topLevel.provideInput('input', x);
     }
 };
