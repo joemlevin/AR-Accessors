@@ -1,7 +1,7 @@
 #include <Adafruit_NeoPixel.h>
 
 //Enumeration of shows supported
-enum show_type {NONE, COLOR_WIPE}
+enum show_type {NONE, COLOR_WIPE, RAINBOW_CYCLE, THEATER_CHASE}
 
 //LightShow displays NeoPixel light shows
 class LightShow : public Adafruit_NeoPixel {
@@ -28,7 +28,7 @@ class LightShow : public Adafruit_NeoPixel {
     //has passed and if so, calls the appropriate update method depending on which show is active
     void Step() {
       if ((millis() - last_update_) > interval_) {
-        //Update last_update to reflect that an update has occured
+        //Update last_update to reflect that a step has occured
         last_update_ = millis();
         //Switch case to determine which update state should be entered
         switch(light_show_) { //TODO: Implement rest of shows
@@ -43,11 +43,11 @@ class LightShow : public Adafruit_NeoPixel {
     
     //Increment index, reset if end is reached
     void Increment() {
-      index++;
-      if (index >= total_steps) {
-        index = 0;
-        if (OnComplete != NULL) {
-          OnComplete(); // Handle callback logic for completed light show
+      index_++;
+      if (index_ >= total_steps_) {
+        index_ = 0;
+        if (OnComplete_ != NULL) {
+          OnComplete_(); // Handle callback logic for completed light show
         }
       }
     }
@@ -65,6 +65,50 @@ class LightShow : public Adafruit_NeoPixel {
       setPixelColor(index_, color1_);
       show();
       Increment();
+    }
+
+    // Initialize Rainbow Cycle show
+    void RainbowCycle(uint8_t interval) {
+        light_show_ = RAINBOW_CYCLE;
+        Interval_ = interval;
+        total_steps_ = 255;
+        index_ = 0;
+    }
+    
+    // Perform step for Rainbow Cycle show
+    void RainbowCycleStep() {
+        for(int i=0; i< numPixels(); i++) {
+            setPixelColor(i, Wheel(((i * 256 / numPixels()) + index_) & 255));
+        }
+        show();
+        Increment();
+    }
+
+    // Initialize Theater Chase show
+    void TheaterChase(uint32_t color1, uint32_t color2, uint8_t interval) {
+        light_show_ = THEATER_CHASE;
+        interval_ = interval;
+        total_steps_ = numPixels();
+        color1_ = color1;
+        color2_ = color2;
+        index_ = 0;
+   }
+    
+    // Update the Theater Chase Pattern
+    void TheaterChaseStep() {
+        for(int i=0; i< numPixels(); i++)
+        {
+            if ((i + index_) % 3 == 0)
+            {
+                setPixelColor(i, color1_);
+            }
+            else
+            {
+                setPixelColor(i, color2_);
+            }
+        }
+        show();
+        Increment();
     }
 }
 
