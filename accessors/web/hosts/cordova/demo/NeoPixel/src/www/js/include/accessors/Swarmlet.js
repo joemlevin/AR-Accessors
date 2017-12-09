@@ -1,4 +1,3 @@
-// Cordova host swarmlet test
 //
 // Copyright (c) 2016-2017 The Regents of the University of California.
 // All rights reserved.
@@ -23,32 +22,37 @@
 // ENHANCEMENTS, OR MODIFICATIONS.
 //
 
-/** This "swarmlet" example, running on Cordova, illustrates the use of Cordova
- *  Host to run a swarmlet. The swarmlet loads loads a 'TestSpontaneousOnce' and
- *  a 'Hello' accessors, initializes them, and connect them
+/** This swarmlet defines the system architecture for the Augmented Reality
+ * Accessor control system. It was written as a part of the AR accessors
+ * class project for EECS149: Embedded Systems during the Fall 2017 semester
+ * at UC Berkeley
  *
  *  See https://www.icyphy.org/accessors/wiki/Main/CordovaHost2
  *
  *  @module swarmlet.js
- *  @author Victor Nouvellet
+ *  @author Joseph Levin
  *  @version $$Id: swarmlet.js 1502 2017-04-17 21:34:03Z cxh $$
  */
 
 exports.setup = function() {
     this.input('input');
     console.log('Swarmlet setup...');
-    var led = this.instantiate("LEDControl", "LED");
-    var schemaToHTML = this.instantiate('sth', 'SchemaToHTML');
+    var neopixel = this.instantiate("led", "NeoPixel");
+    var mutable = this.instantiate('mutable', 'Mutable');
+    var schemaToHtml = this.instantiate('sth', 'SchemaToHTML');
     var ui = this.instantiate('ui', 'UserInput');
-    this.connect(led, 'schema', schemaToHTML, 'schema');
-    this.connect('input', led, 'switch');
-    this.connect(schemaToHTML, 'html', ui, 'input');
+    var ui_build = this.instantiate('ui_build', 'UserInterface');
+    var ar = this.instantiate('ar', 'ARInterface');
+    this.connect(mutable, 'schema', schemaToHtml, 'schema');
+    // this.connect('input', led, 'switch');
+    // this.connect(schemaToHTML, 'html', ui, 'html');
+    // this.connect(ui, 'update', ui_build, 'update');
     console.log('Swarmlet setup ended.');
 };
 
 
 
 exports.initialize = function () {
-    this.react();
+    //this.react();
     console.log('Swarmlet initialized');
 };

@@ -1,12 +1,7 @@
 exports.setup = function() {
-    this.input('switch', {
-        'type': 'string',
-    });
+    this.input('received');
     this.output('schema', {
         'type': 'JSON',
-    });
-    this.output('output', {
-        'type': 'string'
     });
     bluetoothSerial.connect("00:06:66:01:9B:9E",
     function (successMessage) {
@@ -26,10 +21,23 @@ function handleInput() {
     });
 }
 
-exports.initialize = function () {
-    this.addInputHandler('switch', handleInput);
-    this.send('schema', schema);
-    console.log("NeoPixel ready to start.")
+// exports.initialize = function () {
+//     this.addInputHandler('switch', handleInput);
+//     this.send('schema', schema);
+//     console.log("NeoPixel ready to start.")
+// }
+
+exports.initialize = function() {
+	var thiz = this;
+	this.addInputHandler('received', function() {
+		var received = thiz.get('received');
+		if (received.message) {
+			var spec = JSON.parse(received.message);
+			if (spec.show) {
+				console.log("Show selected: " + string(spec.show))
+			}
+		}
+	});
 }
 
 var schema = {

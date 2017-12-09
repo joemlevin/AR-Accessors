@@ -1,13 +1,14 @@
 exports.setup = function() {
-    this.input('input');
-    this.output('output');
+    this.input('html');
+    this.output('update');
 };
 
-function triggerInputHandler() {
-    x = document.getElementById('ui');
-    x.innerHTML += this.get('input');
+function packageHtml() {
+    html = this.get('html');
+    var update = html;
+    this.send('update', update);
 }
 
 exports.initialize = function() {
-    this.addInputHandler('input', triggerInputHandler);
+    this.addInputHandler('html', packageHtml);
 }
