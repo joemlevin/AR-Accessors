@@ -37,7 +37,7 @@
 exports.setup = function() {
     this.input('input');
     console.log('Swarmlet setup...');
-    var neopixel = this.instantiate("led", "NeoPixel");
+    // var neopixel = this.instantiate("led", "NeoPixel");
     var mutable = this.instantiate('mutable', 'Mutable');
     var schemaToHtml = this.instantiate('sth', 'SchemaToHTML');
     var ui = this.instantiate('ui', 'UserInput');
@@ -45,14 +45,14 @@ exports.setup = function() {
     var ar = this.instantiate('ar', 'ARInterface');
     this.connect(mutable, 'schema', schemaToHtml, 'schema');
     // this.connect('input', led, 'switch');
-    // this.connect(schemaToHTML, 'html', ui, 'html');
-    // this.connect(ui, 'update', ui_build, 'update');
+    this.connect(schemaToHtml, 'html', ui, 'html');
+    this.connect(ar, 'accessor', mutable, 'accessor');
+    this.connect(ui, 'update', ui_build, 'update');
     console.log('Swarmlet setup ended.');
 };
 
 
 
 exports.initialize = function () {
-    //this.react();
     console.log('Swarmlet initialized');
 };

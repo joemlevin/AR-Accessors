@@ -38,6 +38,7 @@ exports.initialize = function() {
 			}
 		}
 	});
+    this.send('schema', schema);
 }
 
 var schema = {
