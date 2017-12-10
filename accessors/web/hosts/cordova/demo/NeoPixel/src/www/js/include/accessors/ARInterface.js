@@ -17,5 +17,5 @@ exports.initialize = function() {
     //     app.wikitudePlugin.setBackButtonCallback(app.onBackButton);
     // }
     // app.wikitudePlugin.setJSONObjectReceivedCallback(app.onJSONObjectReceived);
-    this.send('accessor', instantiateAccessor('np', 'NeoPixel', getAccessorCode));
+    // this.send('accessor', instantiateAccessor('np', 'NeoPixel', getAccessorCode));
 };
