@@ -46,6 +46,7 @@ exports.setup = function() {
     this.connect(schemaToHtml, 'html', ui, 'html');
     this.connect(ar, 'accessor', mutable, 'accessor');
     this.connect(ui, 'update', ui_build, 'update');
+    this.connect(ui_build, 'post', mutable, 'control');
     console.log('Swarmlet setup ended.');
 };
 

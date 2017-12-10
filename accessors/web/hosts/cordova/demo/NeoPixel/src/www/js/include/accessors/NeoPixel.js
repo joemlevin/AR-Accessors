@@ -1,5 +1,5 @@
 exports.setup = function() {
-    this.input('received');
+    this.input('control');
     this.output('schema', {
         'type': 'JSON',
     });
@@ -11,16 +11,6 @@ exports.setup = function() {
     });
 };
 
-function handleInput() {
-    x = this.get('switch');
-    console.log('Starting show ' + x);
-    bluetoothSerial.write(x, function () {
-        console.log('Show started.')
-    }, function () {
-        console.log("Error: communication failed.")
-    });
-}
-
 // exports.initialize = function () {
 //     this.addInputHandler('switch', handleInput);
 //     this.send('schema', schema);
@@ -29,12 +19,17 @@ function handleInput() {
 
 exports.initialize = function() {
 	var thiz = this;
-	this.addInputHandler('received', function() {
-		var received = thiz.get('received');
-		if (received.message) {
-			var spec = JSON.parse(received.message);
+	this.addInputHandler('control', function() {
+		var control = thiz.get('control');
+		if (control.message) {
+			var spec = control.message;
 			if (spec.show) {
-				console.log("Show selected: " + string(spec.show))
+				console.log("Show selected: " + spec.show);
+                bluetoothSerial.write(x, function() {
+                    console.log("Command sent to NeoPixel.");
+                }, function() {
+                    console.log("Error: Communication failed.");
+                });
 			}
 		}
 	});

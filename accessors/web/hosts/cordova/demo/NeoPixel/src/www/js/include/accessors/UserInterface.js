@@ -21,7 +21,7 @@ exports.setup = function() {
     this.input('update', {
         'type': 'string'
     });
-
+    this.output('post');
 };
 
 function update() {
@@ -29,9 +29,18 @@ function update() {
     if (!updateContent) {
         updateContent = '';
     }
-    document.getElementById('ui').innerHTML = updateContent;
+    ui = document.getElementById('ui');
+    ui.innerHTML = updateContent;
+    var thiz = this;
+    document.getElementById('form').addEventListener("submit", function() {
+        x = document.getElementById('form').elements["show"].value;
+        var message = {'message': {'show': x}};
+        thiz.send('post', message);
+    });
 };
 
 exports.initialize = function() {
+    var thiz = this;
     this.addInputHandler('update', update.bind(this));
+
 }

@@ -16,11 +16,6 @@ var app = {
     updateStatus: function(id) {
         document.getElementById('status').querySelector(".msg").innerHTML = id;
     },
-
-    handleUserInput: function() {
-        x = document.getElementById("form").elements["show"].value;
-        topLevel.provideInput('input', x);
-    }
 };
 
 app.initialize();

@@ -34,7 +34,7 @@ exports.initialize = function() {
 	var self = this;
 	this.addInputHandler('schema', function() {
 		var schema = self.get('schema');
-		var content = '<h2>Inputs:</h2><form action="javascript:app.handleUserInput();" id="form"/><table>';
+		var content = '<h2>Inputs:</h2><form action="javascript:void(0);" id="form"/><table>';
 
         // FIXME: Handle types other than object, e.g. string, number.
         if (schema.type === 'object') {
