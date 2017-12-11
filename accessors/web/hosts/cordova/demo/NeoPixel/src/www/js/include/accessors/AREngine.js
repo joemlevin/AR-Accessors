@@ -39,8 +39,18 @@ exports.initialize = function() {
         var message = {'message': {'show': x}};
         thiz.send('post', message);
     });
-		AR.StartAR();
 		// END TEMPORARY CODE TO TEST INTEGRATION
 		// AR.renderUI(accessor_html, options);
 	});
+	var customArchitectWorld = {
+			"path": "www/world.html",
+			"requiredFeatures": [
+					"image_tracking",
+					"geo"
+			],
+			"startupConfiguration": {
+					"camera_position": "back"
+			}
+	};
+	AR.StartAR(customArchitectWorld);
 }

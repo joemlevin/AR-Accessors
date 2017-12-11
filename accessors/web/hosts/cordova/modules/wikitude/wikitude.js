@@ -62,10 +62,11 @@ exports.StartAR = function (settings){
 		// If I haven't seen the target_id, please add it to memory.
 		if (!targets.includes(target_id)) {
 			targets.push({target_id: target});
-		settings.callback_func(target_id);
-  }
+			settings.callback_func(target_id);
+  	}
 	}
 	bindEvents(onJSONObjectReceived);
+	loadARchitectWorld(settings);
 	console.log("AR initialized.");
 };
 exports.TestFn = function() {
@@ -154,10 +155,10 @@ function loadARchitectWorld(architectWorld) {
 }
 
 
-function onJSONObjectReceived(jsonObject) {
-    // What to do whenever, I receive a jsonObject specifying the AR Tag that I have seen.
-}
-
-function onBackButton() {
-    /* Android back button was pressed and the Wikitude PhoneGap Plugin is now closed */
-}
+// function onJSONObjectReceived(jsonObject) {
+//     // What to do whenever, I receive a jsonObject specifying the AR Tag that I have seen.
+// }
+//
+// function onBackButton() {
+//     /* Android back button was pressed and the Wikitude PhoneGap Plugin is now closed */
+// }
