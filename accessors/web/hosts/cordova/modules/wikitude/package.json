@@ -1,0 +1,30 @@
+{
+    "name": "wikitude",
+    "version": "1.0.0",
+    "description": "A module that provides access to the Wikitude SDK",
+    "main": "wikitude.js",
+    "author": "AR-Accessors: Marsalis Gibson, Joseph Levin, Sam Pisheh",
+    "license": "Apache-2.0",
+    "cordova": {
+        "plugins": {
+            "cordova-plugin-whitelist": {},
+            "com.wikitude.phonegap.WikitudePlugin": {},
+            "cordova-plugin-device": {},
+            "cordova-plugin-android-permissions": {}
+        }
+    },
+    "dependencies": {
+        "cordova-android": "^6.2.3",
+        "cordova-browser": "^4.1.0",
+        "cordova-ios": "^4.4.0",
+        "cordova-plugin-android-permissions": "^1.0.0",
+        "cordova-plugin-device": "^1.1.6",
+        "cordova-plugin-whitelist": "^1.3.2",
+        "com.wikitude.phonegap.WikitudePlugin": "^7.1.0",
+    },
+    "interface": {
+        "functions": {
+            "RenderUI": ["listHandler"]
+        }
+    }
+}
