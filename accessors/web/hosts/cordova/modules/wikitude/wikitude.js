@@ -48,6 +48,9 @@ var isArchitectWorldLoaded = false;
 var ar_path = "www/world.html"; //Change this!
 var targets = []
 
+exports.setLicenseKey = function (key) {
+	wikitudePlugin._sdkKey = key;
+}
 exports.StartAR = function (settings){
 	// represents the device capability of launching ARchitect Worlds with specific features
 	var onJSONObjectReceived = function (seen_target) {
@@ -84,15 +87,13 @@ exports.RenderUI = function (options){
 }
 
 function bindEvents(onJSONObjectReceived) {
-	var onDeviceReady = function () {
-	    // set a callback for android that is called once the back button was clicked.
-	    if ( cordova.platformId == "android" ) {
-	        wikitudePlugin.setBackButtonCallback(onBackButton);
-	    }
-	    wikitudePlugin.setJSONObjectReceivedCallback(onJSONObjectReceived);
-	    loadCustomARchitectWorldFromURL(ar_path);
-	}
-	document.addEventListener('deviceready', onDeviceReady, false);
+	// set a callback for android that is called once the back button was clicked.
+	// if ( cordova.platformId == "android" ) {
+	//     wikitudePlugin.setBackButtonCallback(onBackButton);
+	// }
+	wikitudePlugin.setJSONObjectReceivedCallback(onJSONObjectReceived);
+	//loadCustomARchitectWorldFromURL(ar_path);
+	//document.addEventListener('deviceready', onDeviceReady, false);
 }
 
 function loadCustomARchitectWorldFromURL(url) {
