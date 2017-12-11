@@ -30,7 +30,7 @@
  *	Portions of the code is drawn from sample examples for the wikiPlugin.
  *
  *  @module wikitude
- *  @author Marsalis Gibson
+ *  @author Marsalis Gibson, Joseph Levin
  *  @version $$Id: wikitude.js 76494 2017-08-02 12:04:07Z cxh $$
  */
 
@@ -45,21 +45,28 @@ exports.requiredPlugins = ['com.wikitude.phonegap.WikitudePlugin'];
 var wikitudePlugin = cordova.require("com.wikitude.phonegap.WikitudePlugin.WikitudePlugin");
 var isDeviceSupported = false;
 var isArchitectWorldLoaded = false;
-var ar_path = "www/index2.html"; //Change this!
+var ar_path = "www/world.html"; //Change this!
 var targets = []
 
 exports.StartAR = function (settings){
 	// represents the device capability of launching ARchitect Worlds with specific features
 	var onJSONObjectReceived = function (seen_target) {
-		var target_id = seen_target.id;
-		var target = seen_target.my_target
-		// If I haven't seen the target_id, please add it to memory.
-	// 	if (target_id not in this.targets) {
-	// 		this.targets.push({target_id: target})
-	// 	settings.callback_func(target_id);
-  // }
+		var target_id = null;
+		var target = null;
+		if (seen_target.id && seen_target.my_target) {
+		target_id = seen_target.id;
+		arget = seen_target.my_target
+	} else {
+		return;
 	}
-	this.bindEvents(onJSONObjectReceived);
+		// If I haven't seen the target_id, please add it to memory.
+		if (!targets.includes(target_id)) {
+			targets.push({target_id: target});
+		settings.callback_func(target_id);
+  }
+	}
+	bindEvents(onJSONObjectReceived);
+	console.log("AR initialized.");
 };
 exports.TestFn = function() {
   console.log("This is Charles Humbleton, BBC News.")
@@ -72,17 +79,17 @@ exports.RenderUI = function (options){
 		target_name: new_target,
 		callback_func: options.UI_input_handler
 	};
-    this.wikitudePlugin.callJavaScript("World.constructUI(" + JSON.stringify( settings ) +");");
+    wikitudePlugin.callJavaScript("World.constructUI(" + JSON.stringify( settings ) +");");
 }
 
 function bindEvents(onJSONObjectReceived) {
 	var onDeviceReady = function () {
 	    // set a callback for android that is called once the back button was clicked.
 	    if ( cordova.platformId == "android" ) {
-	        this.wikitudePlugin.setBackButtonCallback(onBackButton);
+	        wikitudePlugin.setBackButtonCallback(onBackButton);
 	    }
-	    this.wikitudePlugin.setJSONObjectReceivedCallback(onJSONObjectReceived);
-	    this.loadCustomARchitectWorldFromURL(this.ar_path);
+	    wikitudePlugin.setJSONObjectReceivedCallback(onJSONObjectReceived);
+	    loadCustomARchitectWorldFromURL(ar_path);
 	}
 	document.addEventListener('deviceready', onDeviceReady, false);
 }
@@ -98,15 +105,15 @@ function loadCustomARchitectWorldFromURL(url) {
             "camera_position": "back"
         }
     };
-    this.isArchitectWorldLoaded = false;
-    this.prepareArchitectWorld(customArchitectWorld, function() {
-        this.loadARchitectWorld(customArchitectWorld);
+    isArchitectWorldLoaded = false;
+    prepareArchitectWorld(customArchitectWorld, function() {
+        loadARchitectWorld(customArchitectWorld);
     });
 }
 
 function prepareArchitectWorld(architectWorld, successCallback) {
-    this.wikitudePlugin.isDeviceSupported(function() {
-        this.wikitudePlugin.requestAccess(
+    wikitudePlugin.isDeviceSupported(function() {
+        wikitudePlugin.requestAccess(
             function() {
                 successCallback();
             },
@@ -118,7 +125,7 @@ function prepareArchitectWorld(architectWorld, successCallback) {
                 /* Here, the userDescription is used to show a confirmation box which, in case of a positive result, shows the applications settings so that user can grant access. */
                 var openAppSettings = confirm(error.userDescription + '\nOpen App Settings?');
                 if ( openAppSettings == true ) {
-                    this.wikitudePlugin.openAppSettings();
+                    wikitudePlugin.openAppSettings();
                 }
             },
             architectWorld.requiredFeatures);
@@ -130,16 +137,16 @@ function prepareArchitectWorld(architectWorld, successCallback) {
 
 // Use this method to load a specific ARchitect World from either the local file system or a remote server
 function loadARchitectWorld(architectWorld) {
-    this.wikitudePlugin.loadARchitectWorld(function successFn(loadedURL) {
+    wikitudePlugin.loadARchitectWorld(function successFn(loadedURL) {
             /* Respond to successful world loading if you need to */
-            this.isArchitectWorldLoaded = true;
+            isArchitectWorldLoaded = true;
 
             /* in case the loaded Architect World belongs to the 'obtain poi data from application model' example, we can now safely inject poi data. */
             if ( architectWorld.requiredExtension === "ObtainPoiDataFromApplicationModel" ) {
                 injectGeneratedPoiJsonData();
             }
         }, function errorFn(error) {
-            this.isArchitectWorldLoaded = false;
+            isArchitectWorldLoaded = false;
             alert('Loading AR web view failed: ' + error);
         },
         architectWorld.path, architectWorld.requiredFeatures, architectWorld.startupConfiguration

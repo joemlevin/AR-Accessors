@@ -39,7 +39,7 @@ exports.initialize = function() {
         var message = {'message': {'show': x}};
         thiz.send('post', message);
     });
-		AR.TestFn();
+		AR.StartAR();
 		// END TEMPORARY CODE TO TEST INTEGRATION
 		// AR.renderUI(accessor_html, options);
 	});
