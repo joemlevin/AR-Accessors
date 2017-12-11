@@ -6,6 +6,7 @@ var World = {
 
     init: function initFn() {
         this.createOverlays();
+        console.log("Overlays created");
     },
 
     createOverlays: function () {
@@ -32,6 +33,7 @@ var World = {
             onTargetsLoaded: this.worldLoaded,
             onError: function (errorMessage) {
                 alert(errorMessage);
+                console("Failed to load world.")
             }
         });
 
@@ -86,11 +88,11 @@ var World = {
 			"<div" + cssDivRight + ">";
 	},
 
-	/* Please note that settings should look as follows: 
+	/* Please note that settings should look as follows:
      *
-     */ 
+     */
 	constructUI: function (settings) {
-		
+
 		var html_drawable = settings.html;
 		var target = settings.target_name;
 		/* Create drawable for the seen AR tag */

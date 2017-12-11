@@ -1,5 +1,5 @@
 exports.setup = function () {
-    this.input('tagId',{'type': 'string',});
+    this.input('tagId', {'type': 'string',});
 
     this.output('accessor');
 
@@ -8,13 +8,6 @@ exports.setup = function () {
 
 function triggerInputHandler() {
     tag = this.get('tagId');
-    console.log(tag);
-    var out; //= "";
-    if (tag == '1') {
-        out = '1';
-    } else {
-        out = '0';
-    }
     if (accessorStore[tag]) {
         name = accessorStore[tag];
         accessor = instantiateAccessor(name, name, getAccessorCode);

@@ -46,7 +46,7 @@ var wikitudePlugin = cordova.require("com.wikitude.phonegap.WikitudePlugin.Wikit
 var isDeviceSupported = false;
 var isArchitectWorldLoaded = false;
 var ar_path = "www/world.html"; //Change this!
-var targets = []
+var targets = {}
 
 exports.setLicenseKey = function (key) {
 	wikitudePlugin._sdkKey = key;
@@ -58,18 +58,18 @@ exports.StartAR = function (settings){
 		var target = null;
 		if (seen_target.id && seen_target.my_target) {
 		target_id = seen_target.id;
-		arget = seen_target.my_target
+		target = seen_target.my_target;
 	} else {
 		return;
 	}
 		// If I haven't seen the target_id, please add it to memory.
-		if (!targets.includes(target_id)) {
-			targets.push({target_id: target});
+		if (!targets[target_id]) {
+			targets[target_id];
 			settings.callback_func(target_id);
   	}
 	}
 	bindEvents(onJSONObjectReceived);
-	loadARchitectWorld(settings);
+	loadARchitectWorld(settings.world);
 	console.log("AR initialized.");
 };
 exports.TestFn = function() {
@@ -77,7 +77,7 @@ exports.TestFn = function() {
 }
 exports.RenderUI = function (options){
 	// Send the construction to Wikitube
-	var new_target = this.targets[options.target_id];
+	var new_target = targets[options.target_id];
 	var settings = {
 		html: options.html,
 		target_name: new_target,
@@ -142,7 +142,7 @@ function loadARchitectWorld(architectWorld) {
     wikitudePlugin.loadARchitectWorld(function successFn(loadedURL) {
             /* Respond to successful world loading if you need to */
             isArchitectWorldLoaded = true;
-
+						console.log("World Loaded")
             /* in case the loaded Architect World belongs to the 'obtain poi data from application model' example, we can now safely inject poi data. */
             if ( architectWorld.requiredExtension === "ObtainPoiDataFromApplicationModel" ) {
                 injectGeneratedPoiJsonData();
