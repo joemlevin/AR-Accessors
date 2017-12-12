@@ -1,6 +1,7 @@
 /* This is part 2 to the Wiki module.
  */
-
+var asset = "assets/ar_11.wtc";
+var trackableName = "*";
 var World = {
     loaded: false,
     // AR.logger.debug('Entered World instance.');
@@ -16,7 +17,7 @@ var World = {
          Important: If you replace the tracker file with your own, make sure to change the target name accordingly.
          Use a specific target name to respond only to a certain target or use a wildcard to respond to any or a certain group of targets.
          */
-        var targetCollectionResource = new AR.TargetCollectionResource("assets/ar_11.wtc");
+        var targetCollectionResource = new AR.TargetCollectionResource(asset);
 
         /*
          To enable simultaneous tracking of multiple targets 'maximumNumberOfConcurrentlyTrackableTargets' has to be passed as a parameter.
@@ -37,7 +38,7 @@ var World = {
             }
         });
 
-        this.targets = new AR.ImageTrackable(tracker, "*", {
+        this.targets = new AR.ImageTrackable(tracker, trackableName, {
             onImageRecognized: function (target) {
             	// Send the tag id and target name to the output function to generate the HTML overlay.
             	var target_id = 1; //Change this to use the JSON metadata for each image detected.
@@ -96,12 +97,16 @@ var World = {
 		var html_drawable = settings.html;
 		var target = settings.target_name;
 		/* Create drawable for the seen AR tag */
-		var overlayOne = new AR.HtmlDrawable({html:html_drawable}, 1, {
-		  offsetX : 1,
-		  scale: 2,
-		  clickThroughEnabled: true,
-		  // horizontalAnchor : AR.CONST.HORIZONTAL_ANCHOR.LEFT,
-		  opacity : 0.9
+    var overlayOne = new AR.HtmlDrawable({html:html_drawable}, 1, {
+            backgroundColor : '#808080',
+            clickThroughEnabled : true,
+            offsetX : 0,
+            scale: 0,
+            clickThroughEnabled: true,
+            viewportWidth : 300,
+            viewportHeight : 300,
+            opacity : 0.9,
+            zOrder :1
 		});
 		/*
 	     Adds the model as augmentation for the currently recognized target.

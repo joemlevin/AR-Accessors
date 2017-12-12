@@ -52,12 +52,13 @@ exports.initialize = function() {
 				var input = '';
 				if (choices && choices.length) {
 					for (var i = 0; i < choices.length; i++) {
-						input += '<input type="radio" name="'
+						input += '<input type="radio" style="width: 25px;height: 25px;" name="'
 							+ prop
 							+ '" value="'
 							+ choices[i]
 							+ '" form="form"/>'
-							+ choices[i];
+							+ choices[i]
+							+ '<br>';
 					}
 				} else if (options && options.length) {
 					input += '<select form="form" name="'
