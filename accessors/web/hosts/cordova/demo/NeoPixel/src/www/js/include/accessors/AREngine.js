@@ -59,6 +59,7 @@ exports.initialize = function() {
 			// Translate AR_image_id to tag_id
 			var tag_id = AR_image_id; //Potentially change this such that it doesn't depend on AR values
 			saved_tag = tag_id;
+			console.log('tag id callback invoked');
 			//this.send('tag_id', tag_id);
 		}
 	};
