@@ -98,8 +98,8 @@ var World = {
 		/* Create drawable for the seen AR tag */
 		var overlayOne = new AR.HtmlDrawable({html:html_drawable}, 1, {
 		  offsetX : 1,
-		  scale: 1,
-		  onClick : settings.callback_func,
+		  scale: 2,
+		  clickThroughEnabled: true,
 		  // horizontalAnchor : AR.CONST.HORIZONTAL_ANCHOR.LEFT,
 		  opacity : 0.9
 		});
@@ -107,7 +107,6 @@ var World = {
 	     Adds the model as augmentation for the currently recognized target.
 	     */
 	    this.targets.addImageTargetCamDrawables(target, overlayOne);
-
 	    World.removeLoadingBar();
 	}
 };

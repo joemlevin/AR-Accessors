@@ -55,15 +55,11 @@ exports.StartAR = function (settings){
 	// represents the device capability of launching ARchitect Worlds with specific features
 	var onJSONObjectReceived = function (seen_target) {
 		var callback_func = settings.callback_func;
-		var target_id = null;
-		var target = null;
-		if (seen_target.id && seen_target.my_target) {
-		target_id = seen_target.id;
-		target = seen_target.my_target;
-		}
+		var target_id = seen_target.id;
+		var target = seen_target.my_target;
 		// If I haven't seen the target_id, please add it to memory.
 		if (!targets[target_id]) {
-			targets[target_id];
+			targets[target_id] = target;
 			callback_func(target_id);
   	}
 	}

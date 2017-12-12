@@ -11,6 +11,7 @@ function triggerInputHandler() {
     if (accessorStore[tag]) {
         name = accessorStore[tag];
         accessor = instantiateAccessor(name, name, getAccessorCode);
+        console.log("Accessor instantiated: " + name);
         this.send('accessor', accessor);
     }
 };

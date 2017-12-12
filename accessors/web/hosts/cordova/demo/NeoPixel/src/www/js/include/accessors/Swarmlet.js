@@ -39,8 +39,8 @@ exports.setup = function() {
     console.log('Swarmlet setup...');
     var mutable = this.instantiate('mutable', 'Mutable');
     var schemaToHtml = this.instantiate('sth', 'SchemaToHTML');
-    var ui = this.instantiate('ui', 'UserInput');
-    var ui_build = this.instantiate('ui_build', 'UserInterface');
+    // var ui = this.instantiate('ui', 'UserInput');
+    // var ui_build = this.instantiate('ui_build', 'UserInterface');
     var ar = this.instantiate('ar', 'AREngine');
     var tagToAccessor = this.instantiate('tta', 'TagToAccessor');
     // var spont = this.instantiate('spont', 'test/TestSpontaneousOnce');
@@ -48,8 +48,8 @@ exports.setup = function() {
     this.connect(tagToAccessor, 'accessor', mutable, 'accessor');
     this.connect(mutable, 'schema', schemaToHtml, 'schema');
     this.connect(schemaToHtml, 'html', ar, 'html');
-    this.connect(ui, 'update', ui_build, 'update');
-    this.connect(ui_build, 'post', mutable, 'control');
+    // this.connect(ui, 'update', ui_build, 'update');
+    // this.connect(ui_build, 'post', mutable, 'control');
 
     this.connect(ar, 'tag_id', tagToAccessor, 'tagId');
     console.log('Swarmlet setup ended.');

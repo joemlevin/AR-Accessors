@@ -10,7 +10,7 @@ exports.setup = function(){
 	this.output('tag_id');
 	// ConstructingUI
 	this.input('html');
-	this.output('post');
+	this.output('command');
 	// var spont = this.instantiate('sp', 'test/TestSpontaneousOnce');
 	// spont.setParameter('delay', 1000.0);
 	// spont.setParameter('value', 1);
@@ -21,16 +21,19 @@ exports.initialize = function() {
 	// Detection
 	// AR.startDetection(settings);
 	// ConstructUI
+	var thiz = this;
 	this.addInputHandler('html', function (){
 		var accessor_html = this.get('html');
 		var options = {
 			'UI_input_handler': function(command){
-				//this.send('command', command); // If this works wow
+				console.log("Command recevied: " + command.toString());
+				var message = {'message': {'show': command}};
+				thiz.send('command', command); // If this works wow
 			},
 			'html': accessor_html,
 			'target_id': saved_tag
 		};
-		//AR.renderUI(options);
+		AR.RenderUI(options);
 		// BEGIN TEMPORARY CODE TO TEST INTEGRATION
 		// ui = document.getElementById('ui');
     // ui.innerHTML = accessor_html;
@@ -59,8 +62,8 @@ exports.initialize = function() {
 			// Translate AR_image_id to tag_id
 			var tag_id = AR_image_id; //Potentially change this such that it doesn't depend on AR values
 			saved_tag = tag_id;
-			console.log('tag id callback invoked');
-			//this.send('tag_id', tag_id);
+			console.log('tag id callback invoked: ' + tag_id.toString());
+			thiz.send('tag_id', tag_id);
 		}
 	};
 	AR.StartAR(settings);
