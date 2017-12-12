@@ -40,7 +40,7 @@ var World = {
         this.targets = new AR.ImageTrackable(tracker, "*", {
             onImageRecognized: function (target) {
             	// Send the tag id and target name to the output function to generate the HTML overlay.
-            	var target_id = 0; //Change this to use the JSON metadata for each image detected.
+            	var target_id = 1; //Change this to use the JSON metadata for each image detected.
             	AR.platform.sendJSONObject({
                 my_target: target,
 			          id: target_id
