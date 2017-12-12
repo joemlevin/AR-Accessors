@@ -101,13 +101,14 @@ var World = {
             backgroundColor : '#808080',
             clickThroughEnabled : true,
             offsetX : 0,
-            scale: 0,
-            clickThroughEnabled: true,
+            scale: 1,
             viewportWidth : 300,
             viewportHeight : 300,
             opacity : 0.9,
-            zOrder :1
+            zOrder :1,
+            url : "architectsdk://"+target,
 		});
+    AR.logger.debug(overlayOne.url);
 		/*
 	     Adds the model as augmentation for the currently recognized target.
 	     */
