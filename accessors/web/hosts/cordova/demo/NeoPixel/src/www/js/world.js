@@ -3,10 +3,10 @@
 
 var World = {
     loaded: false,
-
+    // AR.logger.debug('Entered World instance.');
     init: function initFn() {
+        // AR.logger.debug('Called Init.');
         this.createOverlays();
-        console.log("Overlays created");
     },
 
     createOverlays: function () {
@@ -33,7 +33,7 @@ var World = {
             onTargetsLoaded: this.worldLoaded,
             onError: function (errorMessage) {
                 alert(errorMessage);
-                console("Failed to load world.")
+                console.log("Error: " + errorMessage);
             }
         });
 
@@ -42,9 +42,9 @@ var World = {
             	// Send the tag id and target name to the output function to generate the HTML overlay.
             	var target_id = 0; //Change this to use the JSON metadata for each image detected.
             	AR.platform.sendJSONObject({
-			       my_target: target,
-			       id: target_id
-			    });
+                my_target: target,
+			          id: target_id
+              });
             	// Eventually a function will be called that retrieves the HTML string and adds that overlay
             	// to the target name.
 

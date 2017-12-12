@@ -54,22 +54,24 @@ exports.setLicenseKey = function (key) {
 exports.StartAR = function (settings){
 	// represents the device capability of launching ARchitect Worlds with specific features
 	var onJSONObjectReceived = function (seen_target) {
+		var callback_func = settings.callback_func;
 		var target_id = null;
 		var target = null;
 		if (seen_target.id && seen_target.my_target) {
 		target_id = seen_target.id;
 		target = seen_target.my_target;
-	} else {
-		return;
-	}
+		}
 		// If I haven't seen the target_id, please add it to memory.
 		if (!targets[target_id]) {
 			targets[target_id];
-			settings.callback_func(target_id);
+			callback_func(target_id);
   	}
 	}
 	bindEvents(onJSONObjectReceived);
-	loadARchitectWorld(settings.world);
+	var customArchitectWorld = settings.world;
+	prepareArchitectWorld(customArchitectWorld, function() {
+			loadARchitectWorld(customArchitectWorld);
+	});
 	console.log("AR initialized.");
 };
 exports.TestFn = function() {

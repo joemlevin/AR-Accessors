@@ -11,10 +11,10 @@ exports.setup = function(){
 	// ConstructingUI
 	this.input('html');
 	this.output('post');
-	var spont = this.instantiate('sp', 'test/TestSpontaneousOnce');
-	spont.setParameter('delay', 1000.0);
-	spont.setParameter('value', 1);
-	this.connect(spont, 'output', 'tag_id');
+	// var spont = this.instantiate('sp', 'test/TestSpontaneousOnce');
+	// spont.setParameter('delay', 1000.0);
+	// spont.setParameter('value', 1);
+	// this.connect(spont, 'output', 'tag_id');
 }
 
 exports.initialize = function() {
@@ -25,7 +25,7 @@ exports.initialize = function() {
 		var accessor_html = this.get('html');
 		var options = {
 			'UI_input_handler': function(command){
-				this.send('command', command); // If this works wow
+				//this.send('command', command); // If this works wow
 			},
 			'html': accessor_html,
 			'target_id': saved_tag
@@ -59,7 +59,7 @@ exports.initialize = function() {
 			// Translate AR_image_id to tag_id
 			var tag_id = AR_image_id; //Potentially change this such that it doesn't depend on AR values
 			saved_tag = tag_id;
-			this.send('tag_id', tag_id);
+			//this.send('tag_id', tag_id);
 		}
 	};
 	AR.StartAR(settings);
