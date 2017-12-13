@@ -44,7 +44,9 @@ exports.setup = function() {
     var ar = this.instantiate('ar', 'AREngine');
     var tagToAccessor = this.instantiate('tta', 'TagToAccessor');
     // var spont = this.instantiate('spont', 'test/TestSpontaneousOnce');
-
+    // spont.setParameter('delay', 1000.0);
+    // spont.setParameter('value', 1);
+    this.connect(spont, 'output', tagToAccessor, 'tagId');
     this.connect(tagToAccessor, 'accessor', mutable, 'accessor');
     this.connect(mutable, 'schema', schemaToHtml, 'schema');
     this.connect(schemaToHtml, 'html', ar, 'html');

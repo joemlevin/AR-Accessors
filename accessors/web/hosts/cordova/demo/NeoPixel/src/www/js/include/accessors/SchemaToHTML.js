@@ -30,62 +30,96 @@ exports.setup = function() {
 	this.input('schema', {'type':'JSON'});
 	this.output('html', {'type':'string'});
 }
-exports.initialize = function() {
-	var self = this;
-	this.addInputHandler('schema', function() {
-		var schema = self.get('schema');
-		var content = '<h2>Inputs:</h2><form action="javascript:void(0);" id="form"/><table>';
+// exports.initialize = function() {
+// 	var self = this;
+// 	this.addInputHandler('schema', function() {
+// 		var schema = self.get('schema');
+// 		var content = '<h2>Inputs:</h2><form action="javascript:void(0);" id="form"/><table>';
+//
+//         // FIXME: Handle types other than object, e.g. string, number.
+//         if (schema.type === 'object') {
+// 			for (prop in schema.properties) {
+// 				var name = prop;
+// 				var entry = schema.properties[prop];
+// 				if (entry['title']) {
+// 					name = entry['title'];
+// 				}
+// 				// Default type of entry will be a string.
+// 				// Note that this is not the same as the type in the schema,
+// 				// which specifies a JSON type, not an HTML5 type.
+// 				var choices = entry['choices'];
+// 				var options = entry['options'];
+// 				var input = '';
+// 				if (choices && choices.length) {
+// 					for (var i = 0; i < choices.length; i++) {
+// 						input += '<input type="radio" style="width: 25px;height: 25px;" name="'
+// 							+ prop
+// 							+ '" value="'
+// 							+ choices[i]
+// 							+ '" form="form"/>'
+// 							+ choices[i]
+// 							+ '<br>';
+// 					}
+// 				} else if (options && options.length) {
+// 					input += '<select form="form" name="'
+// 							+ prop
+// 							+ '">';
+// 					for (var i = 0; i < options.length; i++) {
+// 						input += '<option value="'
+// 							+ options[i]
+// 							+ '">'
+// 							+ options[i]
+// 							+ '</option>';
+// 					}
+// 					input += '</select>';
+// 				} else {
+// 					input = '<input type="text" name="'
+// 							+ prop
+// 							+ '" form="form"/>';
+// 				}
+//
+// 				content += '<tr><td>'
+// 						+ name
+// 						+ '</td><td>'
+// 						+ input
+// 						+ '</td></tr>';
+// 			}
+// 		}
+// 		content += '</table><input type="submit" value="Submit" form="form">';
+// 		self.send('html', content);
+// 	});
+	exports.initialize = function() {
+			var self = this;
+			this.addInputHandler('schema', function() {
+				var schema = self.get('schema');
+				var content = {};
 
-        // FIXME: Handle types other than object, e.g. string, number.
-        if (schema.type === 'object') {
-			for (prop in schema.properties) {
-				var name = prop;
-				var entry = schema.properties[prop];
-				if (entry['title']) {
-					name = entry['title'];
-				}
-				// Default type of entry will be a string.
-				// Note that this is not the same as the type in the schema,
-				// which specifies a JSON type, not an HTML5 type.
-				var choices = entry['choices'];
-				var options = entry['options'];
-				var input = '';
-				if (choices && choices.length) {
-					for (var i = 0; i < choices.length; i++) {
-						input += '<input type="radio" style="width: 25px;height: 25px;" name="'
-							+ prop
-							+ '" value="'
-							+ choices[i]
-							+ '" form="form"/>'
-							+ choices[i]
-							+ '<br>';
+		        // FIXME: Handle types other than object, e.g. string, number.
+		        if (schema.type === 'object') {
+					for (prop in schema.properties) {
+						var name = prop;
+						var entry = schema.properties[prop];
+						if (entry['title']) {
+							name = entry['title'];
+						}
+						// Default type of entry will be a string.
+						// Note that this is not the same as the type in the schema,
+						// which specifies a JSON type, not an HTML5 type.
+						var choices = entry['choices'];
+						var input = '';
+						if (choices && choices.length) {
+							for (var i = 0; i < choices.length; i++) {
+								input = '<input type="button" style="width: 25px;height: 25px;" name="'
+									+ prop
+									+ '" value="'
+									+ choices[i]
+									+ '" form="form"/>'
+									+ choices[i];
+									content[choices[i]] = input;
+							}
+						}
 					}
-				} else if (options && options.length) {
-					input += '<select form="form" name="'
-							+ prop
-							+ '">';
-					for (var i = 0; i < options.length; i++) {
-						input += '<option value="'
-							+ options[i]
-							+ '">'
-							+ options[i]
-							+ '</option>';
-					}
-					input += '</select>';
-				} else {
-					input = '<input type="text" name="'
-							+ prop
-							+ '" form="form"/>';
 				}
-
-				content += '<tr><td>'
-						+ name
-						+ '</td><td>'
-						+ input
-						+ '</td></tr>';
-			}
-		}
-		content += '</table><input type="submit" value="Submit" form="form">';
-		self.send('html', content);
-	});
-}
+				self.send('html', content);
+			});
+	};
