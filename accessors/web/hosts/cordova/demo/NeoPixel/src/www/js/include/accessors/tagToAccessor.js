@@ -1,5 +1,5 @@
 exports.setup = function () {
-    this.input('tagId',{'type': 'string',});
+    this.input('tagId',{'type': 'int',});
 
     this.output('accessor');
 

@@ -42,7 +42,7 @@ exports.setup = function() {
     var ui = this.instantiate('ui', 'UserInput');
     var ui_build = this.instantiate('ui_build', 'UserInterface');
     // var ar = this.instantiate('ar', 'ARInterface');
-    var tagToAccessor = this.instantiate('tta', 'TagToAccessor');
+    var tagToAccessor = this.instantiate('tta', 'tagToAccessor');
 
     var spont = this.instantiate('spont', 'test/TestSpontaneousOnce');
 

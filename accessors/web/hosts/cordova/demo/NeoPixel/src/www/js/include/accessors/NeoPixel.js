@@ -25,7 +25,7 @@ exports.initialize = function() {
 			var spec = control.message;
 			if (spec.show) {
 				console.log("Show selected: " + spec.show);
-                bluetoothSerial.write(x, function() {
+                bluetoothSerial.write(spec.show, function() {
                     console.log("Command sent to NeoPixel.");
                 }, function() {
                     console.log("Error: Communication failed.");
