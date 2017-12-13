@@ -2,6 +2,7 @@
  */
 var asset = "assets/ar_11.wtc";
 var trackableName = "*";
+var activeDrawables = {};
 var World = {
     loaded: false,
     // AR.logger.debug('Entered World instance.');
@@ -94,25 +95,39 @@ var World = {
      */
 	constructUI: function (settings) {
 
-		var html_drawable = settings.html;
+		var buttons = settings.html;
 		var target = settings.target_name;
-		/* Create drawable for the seen AR tag */
-    var overlayOne = new AR.HtmlDrawable({html:html_drawable}, 1, {
-            backgroundColor : '#808080',
-            clickThroughEnabled : true,
-            offsetX : 0,
-            scale: 1,
-            viewportWidth : 300,
-            viewportHeight : 300,
-            opacity : 0.9,
-            zOrder :1,
-            url : "architectsdk://"+target,
-		});
-    AR.logger.debug(overlayOne.url);
-		/*
-	     Adds the model as augmentation for the currently recognized target.
-	     */
-	    this.targets.addImageTargetCamDrawables(target, overlayOne);
+    var translateX = 0;
+    AR.logger.debug(JSON.stringify(buttons));
+    drawables = []
+    // Loop through the required buttons and create drawables for each
+    for (var choice in buttons) {
+      var button = buttons[choice];
+      AR.logger.debug("Value = " + button.value);
+		/* Create drawables for the seen AR tag */
+      var drawable = new AR.HtmlDrawable({html:button.html}, .08, {
+        clickThroughEnabled : true,
+        offsetX : 0,
+        scale: 1,
+        zOrder :1,
+        translate : {
+          x: translateX
+        },
+        backgroundColor: "#ff0000",
+        opacity : .8,
+        onClick : function() {
+          var value = this.translate.x;
+          correctedValue = Math.floor(value / .2) + 1;
+          AR.platform.sendJSONObject({command: correctedValue});
+        }
+      });
+      drawables.push(drawable);
+      translateX += .2
+    }
+    /*
+       Adds the model as augmentation for the currently recognized target.
+       */
+      this.targets.addImageTargetCamDrawables(target, drawables);
 	    World.removeLoadingBar();
 	}
 };

@@ -25,10 +25,10 @@ exports.initialize = function() {
 	this.addInputHandler('html', function (){
 		var accessor_html = this.get('html');
 		var options = {
-			'UI_input_handler': function(command){
+			'input_handler': function(command){
 				console.log("Command recevied: " + command.toString());
 				var message = {'message': {'show': command}};
-				thiz.send('command', command); // If this works wow
+				thiz.send('command', message);
 			},
 			'html': accessor_html,
 			'target_id': saved_tag
@@ -64,6 +64,11 @@ exports.initialize = function() {
 			saved_tag = tag_id;
 			console.log('tag id callback invoked: ' + tag_id.toString());
 			thiz.send('tag_id', tag_id);
+		},
+		"handle_command": function(command) {
+			console.log("Command received: " + command.toString());
+			var message = {'message': {'show': command}};
+			thiz.send('command', message);
 		}
 	};
 	AR.StartAR(settings);

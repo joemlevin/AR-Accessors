@@ -53,15 +53,20 @@ exports.setLicenseKey = function (key) {
 }
 exports.StartAR = function (settings){
 	// represents the device capability of launching ARchitect Worlds with specific features
-	var onJSONObjectReceived = function (seen_target) {
+	var onJSONObjectReceived = function (message) {
+		if (!message.command) {
 		var callback_func = settings.callback_func;
-		var target_id = seen_target.id;
-		var target = seen_target.my_target;
+		var target_id = message.id;
+		var target = message.my_target;
 		// If I haven't seen the target_id, please add it to memory.
 		if (!targets[target_id]) {
 			targets[target_id] = target;
 			callback_func(target_id);
   	}
+	} else {
+		var command = message.command;
+		settings.handle_command(command);
+	}
 	}
 	bindEvents(onJSONObjectReceived);
 	var customArchitectWorld = settings.world;
@@ -76,10 +81,13 @@ exports.TestFn = function() {
 exports.RenderUI = function (options){
 	// Send the construction to Wikitube
 	var new_target = targets[options.target_id];
+	var callbackFn = function(command) {
+		option.input_handler(command);
+	};
 	var settings = {
 		html: options.html,
 		target_name: new_target,
-		callback_func: options.UI_input_handler
+		callback_func: callbackFn
 	};
     wikitudePlugin.callJavaScript("World.constructUI(" + JSON.stringify( settings ) +");");
 }

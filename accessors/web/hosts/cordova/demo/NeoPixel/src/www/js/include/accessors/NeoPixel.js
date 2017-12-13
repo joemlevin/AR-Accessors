@@ -5,31 +5,26 @@ exports.setup = function() {
     });
     bluetoothSerial.connect("00:06:66:01:9B:9E",
     function (successMessage) {
-        console.log("Connected to NeoPixel")
+        console.log("Connected to NeoPixel: " + successMessage);
     }, function error(message) {
-        console.log("chup: " + message)
+        console.log("chup: " + message);
     });
 };
-
-// exports.initialize = function () {
-//     this.addInputHandler('switch', handleInput);
-//     this.send('schema', schema);
-//     console.log("NeoPixel ready to start.")
-// }
 
 exports.initialize = function() {
 	var thiz = this;
 	this.addInputHandler('control', function() {
 		var control = thiz.get('control');
+    console.log("Command handler called");
 		if (control.message) {
 			var spec = control.message;
 			if (spec.show) {
 				console.log("Show selected: " + spec.show);
-                bluetoothSerial.write(x, function() {
-                    console.log("Command sent to NeoPixel.");
-                }, function() {
-                    console.log("Error: Communication failed.");
-                });
+        bluetoothSerial.write(spec.show, function() {
+            console.log("Command sent to NeoPixel.");
+        }, function() {
+            console.log("Error: Communication failed.");
+        });
 			}
 		}
 	});
@@ -43,7 +38,7 @@ var schema = {
             "type": "string",
             "title": "Show Select",
             "description": "The name of the show to play",
-            "choices": ["A", "B", "C", "D", "E"]
+            "choices": ["A", "B", "C", "D", "E", "F"]
         }
     }
 };

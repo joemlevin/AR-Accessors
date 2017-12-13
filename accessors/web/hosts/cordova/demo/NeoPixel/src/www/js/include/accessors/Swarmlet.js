@@ -46,14 +46,14 @@ exports.setup = function() {
     // var spont = this.instantiate('spont', 'test/TestSpontaneousOnce');
     // spont.setParameter('delay', 1000.0);
     // spont.setParameter('value', 1);
-    this.connect(spont, 'output', tagToAccessor, 'tagId');
+    // this.connect(spont, 'output', tagToAccessor, 'tagId');
     this.connect(tagToAccessor, 'accessor', mutable, 'accessor');
     this.connect(mutable, 'schema', schemaToHtml, 'schema');
     this.connect(schemaToHtml, 'html', ar, 'html');
     // this.connect(ui, 'update', ui_build, 'update');
     // this.connect(ui_build, 'post', mutable, 'control');
-
     this.connect(ar, 'tag_id', tagToAccessor, 'tagId');
+    this.connect(ar, 'command', mutable, 'control');
     console.log('Swarmlet setup ended.');
 };
 

@@ -28,7 +28,7 @@
 // will br provided instead of an entry box.
 exports.setup = function() {
 	this.input('schema', {'type':'JSON'});
-	this.output('html', {'type':'string'});
+	this.output('html', {'type':'JSON'});
 }
 // exports.initialize = function() {
 // 	var self = this;
@@ -108,14 +108,11 @@ exports.setup = function() {
 						var choices = entry['choices'];
 						var input = '';
 						if (choices && choices.length) {
+							var left = 55;
 							for (var i = 0; i < choices.length; i++) {
-								input = '<input type="button" style="width: 25px;height: 25px;" name="'
-									+ prop
-									+ '" value="'
-									+ choices[i]
-									+ '" form="form"/>'
-									+ choices[i];
-									content[choices[i]] = input;
+								var offset = i * left;
+								input = '<button style="width:300px; height:300px; font-size: 5em;">'+choices[i]+'</button>';
+									content[choices[i]] = {'html': input, 'value': i};
 							}
 						}
 					}
