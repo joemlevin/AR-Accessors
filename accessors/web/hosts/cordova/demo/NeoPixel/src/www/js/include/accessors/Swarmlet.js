@@ -60,6 +60,6 @@ exports.setup = function() {
 
 
 exports.initialize = function () {
-    this.react();
+    // this.react();
     console.log('Swarmlet initialized');
 };

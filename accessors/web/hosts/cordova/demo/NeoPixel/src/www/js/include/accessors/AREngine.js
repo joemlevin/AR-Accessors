@@ -5,6 +5,7 @@ var key ="ucUHghOxI+30wb8LoegIszD0BZm51S4jSwxHgAUvOsHyTPfDQhCyM76X469mOk2UVbPuS5
 // there is probably a much more robust way of doing this, but it should work
 // for now
 var saved_tag = null;
+var convertCommand = {1: "A", 2: "B", 3: "C", 4: "D", 5: "E", 6: "F"};
 exports.setup = function(){
 	// Detection
 	this.output('tag_id');
@@ -26,8 +27,10 @@ exports.initialize = function() {
 		var accessor_html = this.get('html');
 		var options = {
 			'input_handler': function(command){
-				console.log("Command recevied: " + command.toString());
-				var message = {'message': {'show': command}};
+				console.log("Command received fuck you: " + command.toString());
+				var convertedCommand = convertCommand[command];
+				console.log("Command converted: " + convertedCommand);
+				var message = {'message': {'show': convertedCommand}};
 				thiz.send('command', message);
 			},
 			'html': accessor_html,
@@ -66,8 +69,10 @@ exports.initialize = function() {
 			thiz.send('tag_id', tag_id);
 		},
 		"handle_command": function(command) {
-			console.log("Command received: " + command.toString());
-			var message = {'message': {'show': command}};
+			console.log("Command received fuck you: " + command.toString());
+			var convertedCommand = convertCommand[command];
+			console.log("Command converted: " + convertedCommand);
+			var message = {'message': {'show': convertedCommand}};
 			thiz.send('command', message);
 		}
 	};

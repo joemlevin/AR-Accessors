@@ -3,12 +3,12 @@ exports.setup = function() {
     this.output('schema', {
         'type': 'JSON',
     });
-    bluetoothSerial.connect("00:06:66:01:9B:9E",
-    function (successMessage) {
-        console.log("Connected to NeoPixel: " + successMessage);
-    }, function error(message) {
-        console.log("chup: " + message);
-    });
+    // bluetoothSerial.connect("00:06:66:01:9B:9E",
+    // function (successMessage) {
+    //     console.log("Connected to NeoPixel: " + successMessage);
+    // }, function error(message) {
+    //     console.log("chup: " + message);
+    // });
 };
 
 exports.initialize = function() {
@@ -20,10 +20,18 @@ exports.initialize = function() {
 			var spec = control.message;
 			if (spec.show) {
 				console.log("Show selected: " + spec.show);
-        bluetoothSerial.write(spec.show, function() {
-            console.log("Command sent to NeoPixel.");
-        }, function() {
-            console.log("Error: Communication failed.");
+        bluetoothSerial.connect("00:06:66:01:9B:9E",
+        function (successMessage) {
+            console.log("Connected to NeoPixel: " + successMessage);
+            bluetoothSerial.write(spec.show, function() {
+                console.log("Command sent to NeoPixel.");
+                bluetoothSerial.disconnect();
+            }, function() {
+                console.log("Error: Communication failed.");
+                bluetoothSerial.disconnect();
+            });
+        }, function error(message) {
+            console.log("chup: " + message);
         });
 			}
 		}
