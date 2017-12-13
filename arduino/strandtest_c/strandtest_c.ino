@@ -45,6 +45,7 @@ void setup() {
 void loop() {
   if (bluetooth.available()) {
     incomingByte = bluetooth.read();
+    Serial.print(incomingByte);
     // Some example procedures showing how to display to the pixels:
     if (incomingByte == 'A') {
       colorWipe(strip.Color(255, 0, 0), 50); // Red
