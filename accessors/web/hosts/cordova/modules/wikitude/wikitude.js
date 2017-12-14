@@ -54,15 +54,17 @@ exports.setLicenseKey = function (key) {
 exports.StartAR = function (settings){
 	// represents the device capability of launching ARchitect Worlds with specific features
 	var onJSONObjectReceived = function (message) {
+		// Handles the case of a tag being recognized
 		if (!message.command) {
-		var callback_func = settings.callback_func;
-		var target_id = message.id;
-		var target = message.my_target;
-		// If I haven't seen the target_id, please add it to memory.
-		if (!targets[target_id]) {
-			targets[target_id] = target;
+			var callback_func = settings.callback_func;
+			var target_id = message.id;
+			var target = message.my_target;
+			// If I haven't seen the target_id, please add it to memory.
+			if (!targets[target_id]) {
+				targets[target_id] = target;
+	  	}
 			callback_func(target_id);
-  	}
+	// Handle the case of a command being sent
 	} else {
 		var command = message.command;
 		settings.handle_command(command);
@@ -75,9 +77,10 @@ exports.StartAR = function (settings){
 	});
 	console.log("AR initialized.");
 };
-exports.TestFn = function() {
-  console.log("This is Charles Humbleton, BBC News.")
-}
+
+
+// Parses options arg and tells ARView to construct the UI
+// specified by the html being passed on
 exports.RenderUI = function (options){
 	// Send the construction to Wikitube
 	var new_target = targets[options.target_id];
@@ -93,13 +96,7 @@ exports.RenderUI = function (options){
 }
 
 function bindEvents(onJSONObjectReceived) {
-	// set a callback for android that is called once the back button was clicked.
-	// if ( cordova.platformId == "android" ) {
-	//     wikitudePlugin.setBackButtonCallback(onBackButton);
-	// }
 	wikitudePlugin.setJSONObjectReceivedCallback(onJSONObjectReceived);
-	//loadCustomARchitectWorldFromURL(ar_path);
-	//document.addEventListener('deviceready', onDeviceReady, false);
 }
 
 function loadCustomARchitectWorldFromURL(url) {

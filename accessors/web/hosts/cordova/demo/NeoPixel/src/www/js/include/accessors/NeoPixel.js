@@ -31,7 +31,7 @@ exports.initialize = function() {
                 bluetoothSerial.disconnect();
             });
         }, function error(message) {
-            console.log("chup: " + message);
+            console.log(message);
         });
 			}
 		}
@@ -46,7 +46,7 @@ var schema = {
             "type": "string",
             "title": "Show Select",
             "description": "The name of the show to play",
-            "choices": ["A", "B", "C", "D", "E", "F"]
+            "choices": ["Reset", "Wipe", "Rainbow", "Chase", "Scan", "Fade"]
         }
     }
 };

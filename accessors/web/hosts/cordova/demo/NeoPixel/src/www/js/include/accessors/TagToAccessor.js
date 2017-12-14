@@ -20,4 +20,4 @@ exports.initialize = function () {
     this.addInputHandler('tagId', triggerInputHandler);
 };
 
-var accessorStore = {1: 'NeoPixel'};
+var accessorStore = {1: 'NeoPixel', 2: 'Dummy'};

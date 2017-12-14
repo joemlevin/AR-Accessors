@@ -27,7 +27,7 @@ exports.initialize = function() {
 		var accessor_html = this.get('html');
 		var options = {
 			'input_handler': function(command){
-				console.log("Command received fuck you: " + command.toString());
+				console.log("Command received: " + command.toString());
 				var convertedCommand = convertCommand[command];
 				console.log("Command converted: " + convertedCommand);
 				var message = {'message': {'show': convertedCommand}};

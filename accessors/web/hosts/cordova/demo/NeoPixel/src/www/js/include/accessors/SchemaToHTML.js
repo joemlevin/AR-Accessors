@@ -111,7 +111,7 @@ exports.setup = function() {
 							var left = 55;
 							for (var i = 0; i < choices.length; i++) {
 								var offset = i * left;
-								input = '<button style="width:300px; height:300px; font-size: 5em;">'+choices[i]+'</button>';
+								input = '<button style="width:300px; height:300px; font-size: 4.5em;">'+choices[i]+'</button>';
 									content[choices[i]] = {'html': input, 'value': i};
 							}
 						}
