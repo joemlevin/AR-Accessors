@@ -1,8 +1,9 @@
 /* This is part 2 to the Wiki module.
  */
-var asset = "assets/ar_11.wtc";
-var trackableName = "*";
+var asset = "assets/accimg.wtc";
+var trackableName = "apt1";
 var activeDrawables = {};
+var drawables = []
 var World = {
     loaded: false,
     // AR.logger.debug('Entered World instance.');
@@ -13,8 +14,9 @@ var World = {
 
     createOverlays: function () {
         /*
-         First an AR.ImageTracker needs to be created in order to start the recognition engine. It is initialized with a AR.TargetCollectionResource specific to the target collection that should be used. Optional parameters are passed as object in the last argument. In this case a callback function for the onTargetsLoaded trigger is set. Once the tracker loaded all its target images, the function worldLoaded() is called.
-
+         First an AR.ImageTracker needs to be created in order to start the recognition engine.
+         It is initialized with a AR.TargetCollectionResource specific to the target collection that should be used.
+         Optional parameters are passed as object in the last argument.
          Important: If you replace the tracker file with your own, make sure to change the target name accordingly.
          Use a specific target name to respond only to a certain target or use a wildcard to respond to any or a certain group of targets.
          */
@@ -39,10 +41,13 @@ var World = {
             }
         });
 
-        this.targets = new AR.ImageTrackable(tracker, trackableName, {
+        this.targets = new AR.ImageTrackable(tracker, '*', {
             onImageRecognized: function (target) {
             	// Send the tag id and target name to the output function to generate the HTML overlay.
-            	var target_id = 1; //Change this to use the JSON metadata for each image detected.
+              var target_id;
+              if (target == "apt1") {
+            	 target_id = 1; //Change this to use the JSON metadata for each image detected.
+             }
             	AR.platform.sendJSONObject({
                 my_target: target,
 			          id: target_id
@@ -50,26 +55,13 @@ var World = {
             	// Eventually a function will be called that retrieves the HTML string and adds that overlay
             	// to the target name.
 
-    //             /* Create drawable for the seen AR tag */
-				// var overlayOne = new AR.HtmlDrawable({html:"<button type='button'>LED ON</button>"}, 1, {
-				//   offsetX : 1,
-				//   scale: 1,
-				//   onClick : function() {
-				//     AR.context.openInBrowser("https://www.wikitude.com");
-				//   },
-				//   // horizontalAnchor : AR.CONST.HORIZONTAL_ANCHOR.LEFT,
-				//   opacity : 0.9
-				// });
-
-    //             /*
-    //              Adds the model as augmentation for the currently recognized target.
-    //              */
-    //             this.addImageTargetCamDrawables(target, overlayOne);
-
-    //             World.removeLoadingBar();
             },
             onError: function (errorMessage) {
                 alert(errorMessage);
+            },
+            onImageLost: function(target) {
+              this.targets.removeImageTargetCamDrawables(target, drawables);
+              drawables = [];
             }
         });
     },
@@ -97,15 +89,15 @@ var World = {
 
 		var buttons = settings.html;
 		var target = settings.target_name;
-    var translateX = 0;
+    var initialOffset = -0.25;
+    var translateX = initialOffset;
     AR.logger.debug(JSON.stringify(buttons));
-    drawables = []
     // Loop through the required buttons and create drawables for each
     for (var choice in buttons) {
       var button = buttons[choice];
       AR.logger.debug("Value = " + button.value);
 		/* Create drawables for the seen AR tag */
-      var drawable = new AR.HtmlDrawable({html:button.html}, .08, {
+      var drawable = new AR.HtmlDrawable({html:button.html}, .1, {
         clickThroughEnabled : true,
         offsetX : 0,
         scale: 1,
@@ -113,16 +105,14 @@ var World = {
         translate : {
           x: translateX
         },
-        backgroundColor: "#ff0000",
-        opacity : .8,
         onClick : function() {
           var value = this.translate.x;
-          correctedValue = Math.floor(value / .2) + 1;
+          correctedValue = Math.floor((value + initialOffset) / .1) + 6;
           AR.platform.sendJSONObject({command: correctedValue});
         }
       });
       drawables.push(drawable);
-      translateX += .2
+      translateX += .1
     }
     /*
        Adds the model as augmentation for the currently recognized target.
